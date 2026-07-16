@@ -6,6 +6,10 @@ Municipio* inicializar_lista(){
     return NULL; 
 }
 
+int lista_municipios_vazia(Municipio* lista_municipios){
+    return lista_municipios == NULL;
+}
+
 Municipio* inserir_municipio(Municipio* lista_municipios, int id_mun, const char* nome){
     Municipio *novo = (Municipio*)malloc(sizeof(Municipio)); //aloca memória para o novo
     if(novo == NULL) return lista_municipios; //retirna a lista original
@@ -31,7 +35,7 @@ Municipio* inserir_municipio(Municipio* lista_municipios, int id_mun, const char
 }
 
 Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
-    if (lista_municipios == NULL) return NULL;
+    if (lista_municipios_vazia(lista_municipios)) return NULL;
 
     Municipio *atual = lista_municipios;
     while(atual != NULL){
@@ -44,7 +48,7 @@ Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
 }
 
 void alterar_municipio(Municipio* lista_municipios, int id_mun, const char* novo_nome){
-    if(lista_municipios == NULL) return;
+    if(lista_municipios_vazia(lista_municipios)) return;
 
     Municipio *municipio = buscar_municipio(lista_municipios, id_mun);
     if(municipio != NULL){
@@ -54,7 +58,7 @@ void alterar_municipio(Municipio* lista_municipios, int id_mun, const char* novo
 }
 
 Municipio* remover_municipio(Municipio* lista_municipios, int id_mun){
-    if(lista_municipios == NULL) return NULL;
+    if(lista_municipios_vazia(lista_municipios)) return NULL;
 
     Municipio *municipio = buscar_municipio(lista_municipios, id_mun);
     if(municipio == NULL) return lista_municipios;
@@ -72,4 +76,29 @@ Municipio* remover_municipio(Municipio* lista_municipios, int id_mun){
     //TODOS: Chamar aqui a função de remover as cachoeiras desse municipio
     free(municipio);
     return lista_municipios;
+}
+
+void listar_municipios(Municipio* lista_municipios){
+    if(lista_municipios_vazia(lista_municipios)){
+        printf("Nenhum municipio cadastrado!\n");
+        return;
+    }
+
+    Municipio *atual = lista_municipios;
+    while(atual != NULL){
+        printf("\tNome: %s\n", atual->nome);
+        atual = atual->prox;
+    }
+}
+
+int contar_municipios(Municipio* lista_municipios){
+    if(lista_municipios_vazia(lista_municipios)) return 0;
+
+    int count = 0;
+    Municipio *atual = lista_municipios;
+    while(atual!=NULL){
+        count++;
+        atual = atual->prox;
+    }
+    return count;
 }
