@@ -29,3 +29,16 @@ Municipio* inserir_municipio(Municipio* lista_municipios, int id_mun, const char
 
     return lista_municipios; //retorna o inicio da lista atualizada
 }
+
+Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
+    if (lista_municipios == NULL) return NULL;
+
+    Municipio *atual = lista_municipios;
+    while(atual != NULL){
+        if(atual->id_municipio == id_mun){
+            return atual; //retorna o ponteiro p o municipio encontrada
+        }
+        atual = atual->prox;
+    }
+    return NULL; 
+}
