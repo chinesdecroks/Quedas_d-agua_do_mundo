@@ -42,3 +42,34 @@ Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
     }
     return NULL; 
 }
+
+void alterar_municipio(Municipio* lista_municipios, int id_mun, const char* novo_nome){
+    if(lista_municipios == NULL) return;
+
+    Municipio *municipio = buscar_municipio(lista_municipios, id_mun);
+    if(municipio != NULL){
+        strcpy(municipio->nome, novo_nome);
+    }
+    return;
+}
+
+Municipio* remover_municipio(Municipio* lista_municipios, int id_mun){
+    if(lista_municipios == NULL) return NULL;
+
+    Municipio *municipio = buscar_municipio(lista_municipios, id_mun);
+    if(municipio == NULL) return lista_municipios;
+
+    if(municipio->ant != NULL){ //se não for o primeiro da lista
+        municipio->ant->prox = municipio->prox;
+    }
+    else{
+        lista_municipios = lista_municipios->prox; 
+    }
+    
+    if(municipio->prox != NULL){ //se não for o último da lista
+        municipio->prox->ant = municipio->ant;
+    }
+    //TODOS: Chamar aqui a função de remover as cachoeiras desse municipio
+    free(municipio);
+    return lista_municipios;
+}
