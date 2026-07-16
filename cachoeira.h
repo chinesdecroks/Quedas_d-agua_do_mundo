@@ -26,6 +26,7 @@ typedef struct Municipio {
 
 // OPERAÇÕES PRINCIPAIS
 
+Municipio* inicializar_lista();
 Municipio* inserir_municipio(Municipio* lista_municipios, int id_mun, const char* nome);
 Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun);
 void alterar_municipio(Municipio* lista_municipios, int id_mun, const char* novo_nome);
