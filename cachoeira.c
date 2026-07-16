@@ -14,7 +14,7 @@ Municipio* inserir_municipio(Municipio* lista_municipios, int id_mun, const char
     Municipio *novo = (Municipio*)malloc(sizeof(Municipio)); //aloca memória para o novo
     if(novo == NULL) return lista_municipios; //retirna a lista original
 
-    novo->id_municipio = id_mun;
+    novo->id_municipio = id_mun; 
     strcpy(novo->nome, nome);
     novo->lista_cachoeiras = NULL;
     novo->prox = NULL; //será NULL pq é o último da lista
@@ -28,8 +28,8 @@ Municipio* inserir_municipio(Municipio* lista_municipios, int id_mun, const char
     while(atual->prox != NULL){ //vai percorrer até o ultimo
         atual = atual->prox;
     }
-    atual->prox = novo;
-    novo->ant = atual;
+    atual->prox = novo; //o último aponta para o novo
+    novo->ant = atual; //o novo aponta para o último
 
     return lista_municipios; //retorna o inicio da lista atualizada
 }
@@ -39,7 +39,7 @@ Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
 
     Municipio *atual = lista_municipios;
     while(atual != NULL){
-        if(atual->id_municipio == id_mun){
+        if(atual->id_municipio == id_mun){ //verficação pelo id
             return atual; //retorna o ponteiro p o municipio encontrada
         }
         atual = atual->prox;
@@ -50,8 +50,8 @@ Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
 void alterar_municipio(Municipio* lista_municipios, int id_mun, const char* novo_nome){
     if(lista_municipios_vazia(lista_municipios)) return;
 
-    Municipio *municipio = buscar_municipio(lista_municipios, id_mun);
-    if(municipio != NULL){
+    Municipio *municipio = buscar_municipio(lista_municipios, id_mun); //encontra o municipio desejado
+    if(municipio != NULL){ //se ele existir, altera o nome
         strcpy(municipio->nome, novo_nome);
     }
     return;
@@ -64,16 +64,18 @@ Municipio* remover_municipio(Municipio* lista_municipios, int id_mun){
     if(municipio == NULL) return lista_municipios;
 
     if(municipio->ant != NULL){ //se não for o primeiro da lista
-        municipio->ant->prox = municipio->prox;
+        municipio->ant->prox = municipio->prox; //o anterior aponta para o prox
     }
     else{
-        lista_municipios = lista_municipios->prox; 
+        lista_municipios = lista_municipios->prox; //atualiza cabeça da lista
     }
     
     if(municipio->prox != NULL){ //se não for o último da lista
-        municipio->prox->ant = municipio->ant;
+        municipio->prox->ant = municipio->ant; //o prox aponta para o anterior
     }
+
     //TODOS: Chamar aqui a função de remover as cachoeiras desse municipio
+
     free(municipio);
     return lista_municipios;
 }
@@ -86,7 +88,7 @@ void listar_municipios(Municipio* lista_municipios){
 
     Municipio *atual = lista_municipios;
     while(atual != NULL){
-        printf("\tNome: %s\n", atual->nome);
+        printf("\tID: %d, Nome: %s\n", atual->id_municipio, atual->nome);
         atual = atual->prox;
     }
 }
