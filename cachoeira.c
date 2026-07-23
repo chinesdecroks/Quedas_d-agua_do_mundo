@@ -80,10 +80,24 @@ void remover_municipio(Municipio** lista_municipios, int id_mun){
         municipio->ant->prox = municipio->prox;
         municipio->prox->ant = municipio->ant;
     }
-
-    //TODOS: Chamar aqui a função de remover as cachoeiras desse municipio
+    
+    remover_todas_cachoeiras(municipio); //remove todas as cachoeiras desse municipio
 
     free(municipio);
+}
+
+void remover_todas_cachoeiras(Municipio* municipio) {
+    if (municipio == NULL || municipio->lista_cachoeiras == NULL) return; // Se o município não existe ou não tem cachoeiras
+
+    Cachoeira* atual = municipio->lista_cachoeiras;
+
+    while (atual != NULL) {
+        Cachoeira* proximo = atual->prox; //salva o endereço do proximo
+        free(atual);
+        atual = proximo;
+    }
+
+    municipio->lista_cachoeiras = NULL; //lista_cachieiras agr está vazia
 }
 
 void listar_municipios(Municipio* lista_municipios){

@@ -29,6 +29,7 @@ void inserir_municipio(Municipio** lista_municipios, int id_mun, char* nome); //
 Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun); //ok
 void alterar_municipio(Municipio* lista_municipios, int id_mun, char* novo_nome); //ok
 void remover_municipio(Municipio** lista_municipios, int id_mun); //ok
+void remover_todas_cachoeiras(Municipio* municipio);
 void listar_municipios(Municipio* lista_municipios); //ok
 int contar_municipios(Municipio* lista_municipios); //ok
 
