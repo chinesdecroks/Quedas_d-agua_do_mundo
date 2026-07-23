@@ -1,300 +1,413 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include "cachoeira.h"
 
-typedef struct Cachoeira 
-{
-    int id_cachoeira;
-    char nome[50];
-    float altura;
-    char dificuldade[20]; // Ex: "Facil", "Media", "Dificil"
-} Cachoeira;
-
-typedef struct no_cachoeira
-{
-    Cachoeira c;
-    struct no_cachoeira* ant;
-    struct no_cachoeira* prox;
-} NoC;
-
-// Lista Principal
-typedef struct Municipio 
-{
-    int id_municipio;
-    char nome[50];
-    DescritorC* lista_cachoeiras;
-} Municipio;
-
-typedef struct no_municipio
-{
-    Municipio m;
-    struct no_municipio* ant;
-    struct no_municipio* prox;
-} NoM;
-
-struct desc_municipio
-{
-    NoM* inicio;
-    NoM* fim;
-    int tam;
-};
-
-struct desc_cachoeira
-{
-    NoC* inicio;
-    NoC* fim;
-    int tam;
-};
-
-void inicializar_municipios(DescritorM* m)
-{
-    m->inicio = NULL;
-    m->fim = NULL;
-    m->tam = 0;
+Municipio* inicializar_lista_vazia(){
+    return NULL; //a cabeça da lista de municipios eh nula, ou seja, lista vazia
 }
 
-void inicializar_cachoeira(DescritorC* c)
-{
-    c->inicio = NULL;
-    c->fim = NULL;
-    c->tam = 0;
+int lista_municipios_vazia(Municipio* lista_municipios){
+    return lista_municipios == NULL;
 }
 
-DescritorM* criar_municipios()
-{
-    DescritorM* m = (DescritorM*)malloc(sizeof(DescritorM));
+void inserir_municipio(Municipio** lista_municipios, int id, char nome[50]){
+    Municipio* novo = (Municipio*) malloc(sizeof(Municipio));
+    if(novo == NULL) {
+        printf("A alocação de memória falhou");
+        return;
+    }
 
-    if (m != NULL)
-        inicializar_municipios(m);
-
-    return m;
-}
-
-DescritorC* criar_cachoeiras()
-{
-    DescritorC* c = (DescritorC*)malloc(sizeof(DescritorC));
-    
-    if (c != NULL)
-        inicializar_cachoeira(c);
-
-    return c;
-}
-
-int lista_municipios_vazia(DescritorM* listaM)
-{
-    return listaM == NULL || listaM->tam == 0;
-}
-
-Municipio scan_municipio()
-{
-    Municipio m;
-    printf("Digite o ID do municipio: ");
-    scanf("%d", &m.id_municipio);
-    getchar();
-
-    printf("Digite o nome do municipio: ");
-    scanf("%[^\n]", m.nome);
-    getchar();
-
-    m.lista_cachoeiras = criar_cachoeiras();
-
-    return m;
-}
-
-NoM* novo_municipio()
-{
-    NoM *novo = (NoM*)malloc(sizeof(NoM)); //aloca memória para o novo
-    
-    if(novo == NULL) 
-        return novo; //retorna a lista original
-
-    //=========Dados do Municipio ==========
-    novo->m = scan_municipio();
+    novo->id_municipio = id;
+    strcpy(novo->nome, nome);
+    novo->lista_cachoeiras = NULL;
     novo->prox = NULL;
-    novo->ant = NULL;
 
-    return novo;
+    //lista vazia: eh necessario modificar a cabeca
+    if(*lista_municipios == NULL){
+        novo->ant = NULL;
+        *lista_municipios = novo;
+    }
+    //lista com pelo menos uma elemento: eh necessario fazer o antigo ultimo apontar para o novo
+    else
+    {
+       Municipio* atual = *lista_municipios;
+       while(atual->prox != NULL)  atual = atual->prox;
+
+       atual->prox = novo;
+       novo->ant = atual;
+    }
 }
 
-int inserir_municipio(DescritorM* listaM)
-{
-    NoM* novo = novo_municipio(), *aux = listaM->fim;
 
-    if (novo == NULL)
-        return 0;
+Municipio* buscar_municipio(Municipio* lista_municipios, int id_mun){
+    if (lista_municipios_vazia(lista_municipios)) return NULL;
 
-    // Verifica se tem ID repetido
-    if(buscar_municipio(listaM, novo->m.id_municipio) != NULL)
-    {
-        free(novo);
-        return 0;
-    }
-
-    //========== Adicionar Nó ==============
-    if (listaM->tam == 0)
-    {
-        listaM->inicio = novo;
-        listaM->fim = novo;
-    } else
-    {
-        aux->prox = novo;
-        novo->ant = aux;
-        listaM->fim = novo;
-    }
-
-    listaM->tam++;
-
-    return 1;
-
-
-}
-
-NoM* buscar_municipio(DescritorM* listaM, int id_mun)
-{
-    if (lista_municipios_vazia(listaM)) return NULL;
-
-    NoM *atual = listaM->inicio;
-    while(atual != NULL)
-    {
-        if(atual->m.id_municipio == id_mun) //verficação pelo id
-        { 
+    Municipio *atual = lista_municipios;
+    while(atual != NULL){
+        if(atual->id_municipio == id_mun){ //verficação pelo id
             return atual; //retorna o ponteiro p o municipio encontrada
         }
-
         atual = atual->prox;
     }
     return NULL; 
 }
 
-void alterar_municipio(DescritorM* listaM, int id_mun, char* novo_nome)
-{
-    if(lista_municipios_vazia(listaM)) return;
+void alterar_municipio(Municipio* lista_municipios, int id_mun, char* novo_nome){
+    if(lista_municipios_vazia(lista_municipios)) return;
 
-    NoM *municipio = buscar_municipio(listaM, id_mun); //encontra o municipio desejado
-    if(municipio != NULL)//se ele existir, altera o nome
-    { 
-        strcpy(municipio->m.nome, novo_nome);
+    Municipio *municipio = buscar_municipio(lista_municipios, id_mun); //encontra o municipio desejado
+    if(municipio != NULL){ //se ele existir, altera o nome
+        strcpy(municipio->nome, novo_nome);
     }
     return;
 }
 
-int remover_municipio(DescritorM* listaM, int id_mun)
-{
-    if(lista_municipios_vazia(listaM)) return 0;
+void remover_municipio(Municipio** lista_municipios, int id_mun){
+    if(lista_municipios_vazia(*lista_municipios)) return;
+    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun);
+    if(municipio == NULL) return ;
 
-    NoM *municipio = buscar_municipio(listaM, id_mun);
-    if(municipio == NULL) return 0;
-
-    if (municipio->ant == NULL && municipio->prox == NULL)
-    {
-        listaM->inicio = NULL;
-        listaM->fim = NULL;
-    } else if (municipio->prox == NULL)
-    {
-        listaM->fim = municipio->ant;
+    //primeiro da lista
+    if (municipio->ant == NULL) {
+        *lista_municipios = municipio->prox;
+    }
+    //ultimo da lista
+    else if (municipio->prox == NULL) {
+        municipio->ant->prox = NULL;
+    }
+    //elemento intermediário
+    else {
         municipio->ant->prox = municipio->prox;
-    } else if (municipio->ant == NULL)
-    {
-        listaM->inicio = municipio->prox;
         municipio->prox->ant = municipio->ant;
-    } else 
-    {
-        municipio->prox->ant = municipio->ant;
-        municipio->ant->prox = municipio->prox;
     }
 
+    //TODOS: Chamar aqui a função de remover as cachoeiras desse municipio
+    liberar_cachoeiras(municipio->lista_cachoeiras);
+
     free(municipio);
-    listaM->tam--;
-    return 1;
 }
 
-void listar_municipios(DescritorM* listaM)
-{
-    printf("\n===============================================\n");
-    if(lista_municipios_vazia(listaM)){
+void listar_municipios(Municipio* lista_municipios){
+    if(lista_municipios_vazia(lista_municipios)){
         printf("Nenhum municipio cadastrado!\n");
         return;
     }
 
-    NoM *atual = listaM->inicio;
+    Municipio *atual = lista_municipios;
     while(atual != NULL){
-        printf("\tID: %d, Nome: %s\n", atual->m.id_municipio, atual->m.nome);
+        printf("\tID: %d, Nome: %s\n", atual->id_municipio, atual->nome);
         atual = atual->prox;
     }
-    printf("==================================================\n");
+    printf("\n");
 }
 
-int contar_municipios(DescritorM* listaM){
-    return listaM->tam;
+int contar_municipios(Municipio* lista_municipios){
+    if(lista_municipios_vazia(lista_municipios)) return 0;
+
+    int count = 0;
+    Municipio *atual = lista_municipios;
+    while(atual!=NULL){
+        count++;
+        atual = atual->prox;
+    }
+    return count;
 }
 
-Cachoeira scan_cachoeira()
-{
-    Cachoeira c;
-    printf("\nDigite o ID da cachoeira: ");
-    scanf("%d", &c.id_cachoeira);
-    getchar();
-
-    printf("\nDigite o nome da cachoeira: ");
-    scanf("%[^\n]", c.nome);
-    getchar();
-
-    printf("\nDigite a altura da cachoeira: ");
-    scanf("%f", &c.altura);
-    getchar();
-
-    printf("\nDigite a dificuldade da cachoeira: ");
-    scanf("%[^\n]", c.dificuldade);
-
-    return c;
-}
-
-NoC* nova_cachoeira()
-{
-    NoC *novo = (NoC*)malloc(sizeof(NoC)); //aloca memória para o novo
-    
-    if(novo == NULL) 
-        return novo; //retorna a lista original
-
-    //=========Dados da Cachoeira ==========
-    novo->c = scan_cachoeira();
-    novo->prox = NULL;
-    novo->ant = NULL;
-
-    return novo;
-}
-
-int inserir_cachoeira(DescritorM* listaM, int id_mun)
-{
-    NoM* municipio = buscar_municipio(listaM, id_mun);
-
-    if (municipio == NULL)
-        return -1;
-
-    DescritorC *aux = municipio->m.lista_cachoeiras;
-    NoC* novo = nova_cachoeira(), *temp = aux->fim; 
-    
-
-
-    if (novo == NULL)
+//funções para cachoeiras
+int inserir_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach, char* nome, float altura, char* dificuldade) {
+    if (lista_municipios_vazia(*lista_municipios)) {
+        printf("Município inexistente\n");
         return 0;
-
-    //========== Adicionar Nó ==============
-    if (aux->tam == 0)
-    {
-        aux->inicio = novo;
-        aux->fim = novo;
-    } else
-    {
-        temp->prox = novo;
-        novo->ant = temp;
-        aux->fim = novo;
     }
 
-    aux->tam++;
+    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun);
+    Cachoeira* nova = (Cachoeira*) malloc(sizeof(Cachoeira));
+    nova->prox = NULL;
+    nova->id_cachoeira = id_cach;
+    strcpy(nova->nome, nome);
+    nova->altura = altura;
+    strcpy(nova->dificuldade, dificuldade);
 
-    return 1;
+    //ainda não ha cachoeiras cadastradas
+    if (municipio->lista_cachoeiras == NULL) {
+        municipio->lista_cachoeiras = nova;
+        nova->ant = NULL;
+    }
+    //ha caachoeiras, entao preciso encontrar a ultima para apontar para a nova
+    else {
+        Cachoeira* atual = municipio->lista_cachoeiras;
+        while (atual->prox != NULL) atual = atual->prox;
+        atual->prox = nova;
+        nova->ant = atual;
+    }
+}
+
+void listar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun) {
+    Municipio* municipio = buscar_municipio(lista_municipios, id_mun);
+    if (lista_municipios_vazia(municipio)) {
+        printf("Município não cadastrado\n");
+        return;
+    }
+
+    if (municipio->lista_cachoeiras == NULL) {
+        printf("Não há cachoeiras cadastradas para esse município\n");
+        return;
+    }
+
+    Cachoeira* atual = municipio->lista_cachoeiras;
+    printf("=== Cachoeiras em %s ===\n", municipio->nome);
+    do {
+        printf("ID: %d, ", atual->id_cachoeira);
+        printf("Nome: %s, ", atual->nome);
+        printf("Altura: %.2f, ", atual->altura);
+        printf("Dificuldade: %s\n", atual->dificuldade);
+        atual = atual->prox;
+    }while (atual != NULL);
+    printf("\n");
+}
+
+int contar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun) {
+    Municipio* municipio = buscar_municipio(lista_municipios, id_mun);
+    if (lista_municipios_vazia(municipio)) {
+        printf("Lista de municípios vazia\n");
+        return 0;
+    }
+
+    Cachoeira* atual = municipio->lista_cachoeiras;
+
+    //nenhuma cachoeira
+    if (atual == NULL) {
+        return 0;
+    }
+    //ao menos uma cachoeira
+    int contador = 1;
+    while (atual->prox != NULL) {
+        atual = atual->prox;
+        contador++;
+    }
+    return contador;
+}
+Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach) {
+    if (lista_municipios_vazia(lista_municipios)) {
+        printf("Lista de municípios vazia\n");
+        return NULL;
+    }
+
+    Cachoeira* cachoeira = lista_municipios->lista_cachoeiras;
+    if (cachoeira == NULL) {
+        printf("Lista de cachoeiras vazia\n");
+        return NULL;
+    }
+
+    while (cachoeira->id_cachoeira != id_cach && cachoeira->prox != NULL) cachoeira = cachoeira->prox;
+
+    //devo verificar, pois pode ter encontrado ou simplesmente chegado no fim
+    if (cachoeira->id_cachoeira == id_cach) return cachoeira;
+
+    return NULL;
+}
+
+void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach) {
+    if (lista_municipios_vazia(*lista_municipios)) {
+        printf("Lista de municípios vazia\n");
+        return;
+    }
+
+    Cachoeira* cachoeira = buscar_cachoeira(*lista_municipios, id_mun, id_cach);
+
+    if (cachoeira == NULL) {
+        printf("Lista de cachoeiras vazia\n");
+        return;
+    }
+
+    //removendo elemento intermediario
+    if (cachoeira->ant != NULL && cachoeira->prox != NULL) {
+        cachoeira->prox->ant = cachoeira->ant;
+        cachoeira->ant->prox = cachoeira->prox;
+    }
+    //remover no inicio
+    else if (cachoeira->ant == NULL) {
+        (*lista_municipios)->lista_cachoeiras = (*lista_municipios)->lista_cachoeiras->prox;
+        (*lista_municipios)->lista_cachoeiras->prox->ant = NULL;
+    }
+    //remover no final
+    else {
+        cachoeira->ant->prox = NULL;
+    }
+
+    free(cachoeira);
+}
+
+void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, char* novo_nome, float nova_altura, char* nova_dificuldade) {
+    if (lista_municipios_vazia(lista_municipios)) {
+        printf("Lista de municípios vazia\n");
+        return;
+    }
+
+    Cachoeira* cachoeira = buscar_cachoeira(lista_municipios, id_mun, id_cach);
+    if (cachoeira == NULL) {
+        printf("Não há cachoeiras cadastradas ou a cachoeira não existe na lista\n");
+        return;
+    }
+
+    strcpy(cachoeira->nome, novo_nome);
+    cachoeira->altura = nova_altura;
+    strcpy(cachoeira->dificuldade, nova_dificuldade);
+
+}
+
+void listar_todas_cachoeiras(Municipio* lista_municipios)
+{
+
+    while (lista_municipios != NULL)
+    {
+        while (lista_municipios->lista_cachoeiras != NULL)
+        {
+            printf("\n===================================================================\n");
+
+            listar_cachoeiras_municipio(lista_municipios, lista_municipios->id_municipio);
+
+            printf("\n===================================================================\n");
+
+            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras->prox;
+
+        }
+
+        lista_municipios = lista_municipios->prox;
+
+    }
+}
+
+void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
+{
+    
+    printf("\n=============================================\n");
+    while (lista_municipios != NULL)
+    { 
+        int cont = 0;
+
+        while (lista_municipios->lista_cachoeiras != NULL)
+        {
+            cont++;
+            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras;
+        }
+
+        printf("Municipio: %s\n", lista_municipios->nome);
+        printf("Cachoeiras: %d\n\n", cont);
+    }
+
+    printf("=============================================\n");
+}
 
 
+Municipio* municipio_com_menos_cachoeiras(Municipio* lista_municipios)
+{
+    Municipio *aux = lista_municipios, *menorM = aux;
+    int menor = contar_cachoeiras_municipio(menorM, menorM->id_municipio);
+
+    while (aux != NULL)
+    {
+        
+        int cachoeiras = contar_cachoeiras_municipio(lista_municipios, aux->id_municipio);
+
+        if (menor > cachoeiras)
+        {
+            menorM = aux;
+            menor = cachoeiras;
+        }
+
+        aux = aux->prox;
+
+    }
+
+    return menorM;
+}
+
+void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade)
+{
+
+    printf("\n====================== %s ======================\n", dificuldade);
+    if (lista_municipios == NULL)
+        printf("\nA lista esta vazia\n\n");
+
+    Municipio* aux = lista_municipios;
+
+    
+    while (aux != NULL)
+    {
+        while (aux->lista_cachoeiras != NULL)
+        {
+            if (!strcmp(dificuldade, aux->lista_cachoeiras->dificuldade));
+            {
+                printf("ID: %d, ", aux->lista_cachoeiras->id_cachoeira);
+                printf("Nome: %s, ", aux->lista_cachoeiras->nome);
+                printf("Altura: %.2fm, ", aux->lista_cachoeiras->altura);
+                printf("Dificuldade: %s\n", aux->lista_cachoeiras->dificuldade);
+            }
+
+            aux->lista_cachoeiras = aux->lista_cachoeiras->prox;
+        }
+
+        aux = aux->prox;
+    }
+    printf("=========================================================\n");
+
+}
+
+void gerar_estatisticas_gerais(Municipio* lista_municipios)
+{
+    int contM = 0, contC = 0;
+
+    while (lista_municipios != NULL)
+    {
+        while (lista_municipios->lista_cachoeiras != NULL)
+        {
+            contC++;
+            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras->prox;
+        }
+
+        contM++;
+        lista_municipios = lista_municipios->prox;
+    }
+
+    float media = (float) contC / contM;
+
+    printf("Municipios: %d\nCachoeiras: %d\nMedia de cachoeiras por municipio: %f\n", contM, contC, media);
+}
+
+void liberar_municipios(Municipio* listaM)
+{
+    if (listaM == NULL)
+    {
+        printf("A lista esta vazia\n");
+    }
+
+    Municipio* aux;
+
+    while (listaM != NULL)
+    {
+        aux = listaM;
+        listaM = listaM->prox;
+        remover_municipio(&listaM, aux->id_municipio);
+    }
+
+    printf("\nLista de municipios liberada com sucesso!!!\n");
+}
+
+void liberar_cachoeiras(Cachoeira* listaC)
+{
+    if (listaC == NULL)
+    {
+        printf("A lista esta vazia\n");
+        return;
+    }
+
+    Cachoeira* aux;
+
+    while (listaC != NULL)
+    {
+        aux = listaC;
+        listaC = listaC->prox;
+        free(aux);
+    }
 }
