@@ -17,17 +17,17 @@ void inserir_municipio(Municipio** lista_municipios, int id, char nome[50]){
         return;
     }
 
-    novo->id_municipio = id;
+    novo->id_municipio = id; 
     strcpy(novo->nome, nome);
-    novo->lista_cachoeiras = NULL;
+    novo->lista_cachoeiras = NULL; 
     novo->prox = NULL;
 
     //lista vazia: eh necessario modificar a cabeca
     if(*lista_municipios == NULL){
-        novo->ant = NULL;
-        *lista_municipios = novo;
+        novo->ant = NULL; //o anterior do primeiro é null
+        *lista_municipios = novo; //nova cabeça da lista
     }
-    //lista com pelo menos uma elemento: eh necessario fazer o antigo ultimo apontar para o novo
+    //lista com pelo menos uma elemento: eh necessario fazer o ultimo (atual) apontar para o novo, pois insere no final
     else
     {
        Municipio* atual = *lista_municipios;
@@ -64,16 +64,16 @@ void alterar_municipio(Municipio* lista_municipios, int id_mun, char* novo_nome)
 
 void remover_municipio(Municipio** lista_municipios, int id_mun){
     if(lista_municipios_vazia(*lista_municipios)) return;
-    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun);
+    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun); //encontra municipio desejado
     if(municipio == NULL) return ;
 
-    //primeiro da lista
+    //se for o primeiro da lista
     if (municipio->ant == NULL) {
-        *lista_municipios = municipio->prox;
+        *lista_municipios = municipio->prox; //a nova cabeça da lista passa a ser o proximo
     }
-    //ultimo da lista
+    //se for o ultimo da lista
     else if (municipio->prox == NULL) {
-        municipio->ant->prox = NULL;
+        municipio->ant->prox = NULL; //o anterior passa a ser o ultimo da lista
     }
     //elemento intermediário
     else {
@@ -133,8 +133,16 @@ int inserir_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach, cha
         return 0;
     }
 
-    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun);
-    Cachoeira* nova = (Cachoeira*) malloc(sizeof(Cachoeira));
+    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun);//encontra municipio que vai receber nova cachoeira
+    if(municipio == NULL){
+        printf("Município não encontrado\n");
+        return 0;
+    }
+    Cachoeira* nova = (Cachoeira*) malloc(sizeof(Cachoeira)); //aloca memória para nova cachoeira
+    if(nova==NULL){
+        printf("Erro de alocação de memória\n");
+        return 0;
+    }
     nova->prox = NULL;
     nova->id_cachoeira = id_cach;
     strcpy(nova->nome, nome);
@@ -143,13 +151,13 @@ int inserir_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach, cha
 
     //ainda não ha cachoeiras cadastradas
     if (municipio->lista_cachoeiras == NULL) {
-        municipio->lista_cachoeiras = nova;
+        municipio->lista_cachoeiras = nova; //nova é a cabeça da lista
         nova->ant = NULL;
     }
-    //ha caachoeiras, entao preciso encontrar a ultima para apontar para a nova
+    //há caachoeiras, entao preciso encontrar a ultima para apontar para a nova
     else {
-        Cachoeira* atual = municipio->lista_cachoeiras;
-        while (atual->prox != NULL) atual = atual->prox;
+        Cachoeira* atual = municipio->lista_cachoeiras; //atual aponta para cabeça da lista
+        while (atual->prox != NULL) atual = atual->prox; //percorro a lista até último elemento
         atual->prox = nova;
         nova->ant = atual;
     }
@@ -157,8 +165,8 @@ int inserir_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach, cha
 
 void listar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun) {
     Municipio* municipio = buscar_municipio(lista_municipios, id_mun);
-    if (lista_municipios_vazia(municipio)) {
-        printf("Município não cadastrado\n");
+    if (municipio == NULL) {
+        printf("Município não encontrado\n");
         return;
     }
 
@@ -181,8 +189,8 @@ void listar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun) {
 
 int contar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun) {
     Municipio* municipio = buscar_municipio(lista_municipios, id_mun);
-    if (lista_municipios_vazia(municipio)) {
-        printf("Lista de municípios vazia\n");
+    if (municipio == NULL) {
+        printf("Município não encontrado\n");
         return 0;
     }
 
@@ -212,6 +220,7 @@ Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach
         return NULL;
     }
 
+    //percorre a lista de cachoeiras do município até encontrar a cachoeira com o id desejado ou chegar ao final da lista
     while (cachoeira->id_cachoeira != id_cach && cachoeira->prox != NULL) cachoeira = cachoeira->prox;
 
     //devo verificar, pois pode ter encontrado ou simplesmente chegado no fim
@@ -229,7 +238,7 @@ void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach) {
     Cachoeira* cachoeira = buscar_cachoeira(*lista_municipios, id_mun, id_cach);
 
     if (cachoeira == NULL) {
-        printf("Lista de cachoeiras vazia\n");
+        printf("Cachoeira não encontrada\n");
         return;
     }
 
@@ -240,8 +249,13 @@ void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach) {
     }
     //remover no inicio
     else if (cachoeira->ant == NULL) {
-        (*lista_municipios)->lista_cachoeiras = (*lista_municipios)->lista_cachoeiras->prox;
-        (*lista_municipios)->lista_cachoeiras->prox->ant = NULL;
+        if(cachoeira->prox !=NULL){
+            (*lista_municipios)->lista_cachoeiras = (*lista_municipios)->lista_cachoeiras->prox; //atualiza cabeça da lista
+            (*lista_municipios)->lista_cachoeiras->prox->ant = NULL;
+        }
+        else{
+            (*lista_municipios)->lista_cachoeiras = NULL; //lista fica vazia se eu removo o primeiro elemento que é o único
+        }
     }
     //remover no final
     else {
