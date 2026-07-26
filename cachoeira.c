@@ -282,3 +282,42 @@ void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, cha
     strcpy(cachoeira->dificuldade, nova_dificuldade);
 
 }
+
+//Função do Lucas CORRIGIDA
+void listar_todas_cachoeiras(Municipio* lista_municipios){
+    if (lista_municipios_vazia(lista_municipios)) {
+        printf("Nenhum municipio cadastrado!\n");
+        return;
+    }
+
+    Municipio* municipio_atual = lista_municipios; // Começa pela cabeça da lista de municípios
+    int encontrou_alguma = 0;
+
+    while (municipio_atual != NULL) {
+        // Ponteiro auxiliar para percorrer as cachoeiras desse município
+        Cachoeira* cachoeira_atual = municipio_atual->lista_cachoeiras;
+
+        if (cachoeira_atual != NULL) {
+            printf("\n===================================================================\n");
+            printf("=== Cachoeiras em %s ===\n", municipio_atual->nome);
+            
+            while (cachoeira_atual != NULL) {
+                printf("  - ID: %d | Nome: %s | Altura: %.2f | Dificuldade: %s\n", 
+                    cachoeira_atual->id_cachoeira, 
+                    cachoeira_atual->nome, 
+                    cachoeira_atual->altura, 
+                    cachoeira_atual->dificuldade);
+                
+                cachoeira_atual = cachoeira_atual->prox; // Avança para a próxima cachoeira
+            }
+            printf("===================================================================\n");
+            encontrou_alguma = 1;
+        }
+
+        municipio_atual = municipio_atual->prox; // Avança parao próximo município
+    }
+
+    if (!encontrou_alguma) { //se encontrou_alguma for 0, é pq passou pelo while e não encontrou nenhuma cachoeira ou município
+        printf("Nenhuma cachoeira cadastrada em nenhum municipio!\n");
+    }
+}
