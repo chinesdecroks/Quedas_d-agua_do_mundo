@@ -321,3 +321,36 @@ void listar_todas_cachoeiras(Municipio* lista_municipios){
         printf("Nenhuma cachoeira cadastrada em nenhum municipio!\n");
     }
 }
+
+Municipio* carregar_dados_arquivo(const char* dados_cachoeiras) {
+    //Inicializa a lista principal vazia
+    Municipio* lista_municipios = inicializar_lista_vazia();
+
+    //Tenta abrir o arquivo para leitura
+    FILE* arquivo = fopen(dados_cachoeiras, "r");
+    if (arquivo == NULL) {
+        printf("Aviso: Arquivo '%s' nao encontrado ou erro ao abrir.\n", dados_cachoeiras);
+        return lista_municipios; // Retorna NULL seguro
+    }
+    char tipo;
+    int id_mun, id_cach;
+    float altura;
+    char nome[50], dificuldade[20];
+
+    // O espaço antes do %c ignora quebras de linha entre as leituras
+    while (fscanf(arquivo, " %c;", &tipo) != EOF) {
+        
+        if (tipo == 'M') {
+            // Lê: id ; Nome\n
+            fscanf(arquivo, "%d;%[^\n]", &id_mun, nome);
+            inserir_municipio(&lista_municipios, id_mun, nome);
+        }
+        else if (tipo == 'C') {
+            // Lê: id_mun ; id_cach ; altura ; dificuldade ; Nome\n
+            fscanf(arquivo, "%d;%d;%f;%[^;];%[^\n]", &id_mun, &id_cach, &altura, dificuldade, nome);
+            inserir_cachoeira(&lista_municipios, id_mun, id_cach, nome, altura, dificuldade);
+        }
+    }
+    fclose(arquivo);
+    return lista_municipios;
+}
