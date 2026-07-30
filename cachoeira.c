@@ -165,6 +165,7 @@ int inserir_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach, cha
         atual->prox = nova;
         nova->ant = atual;
     }
+    return 1;
 }
 
 void listar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun) {
