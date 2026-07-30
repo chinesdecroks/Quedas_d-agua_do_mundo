@@ -1,0 +1,15 @@
+M;1;Carrancas
+C;1;101;35.50;Facil;Cachoeira da Fumaca
+C;1;102;15.00;Media;Cachoeira do Moinho
+C;1;103;50.00;Dificil;Cachoeira do Grão Mogol
+M;2;Capitolio
+C;2;201;20.00;Facil;Cachoeira da Lagoa Azul
+C;2;202;40.00;Media;Cachoeira do Saboro
+M;3;Sao Roque de Minas
+C;3;301;186.00;Dificil;Casca d'Anta
+M;4;Pirenopolis
+C;4;401;8.00;Facil;Cachoeira do Bonsucesso
+C;4;402;12.50;Media;Cachoeira Meia Lua
+C;4;403;22.00;Dificil;Cachoeira do Abade
+C;4;404;18.00;Facil;Cachoeira Dragao
+M;5;Delfinopolis

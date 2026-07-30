@@ -50,13 +50,14 @@ void contar_cachoeiras_por_municipio(Municipio* lista_municipios);
 //3: Retorna o ponteiro para o município com a menor quantidade de cachoeiras
 Municipio* municipio_com_menos_cachoeiras(Municipio* lista_municipios);
 //1: Filtra e exibe as cachoeiras de acordo com a dificuldade buscada
-void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, const char* dificuldade);
+void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade);
 // 2: Gera estatísticas (Total de municípios, total de cachoeiras e média)
 void gerar_estatisticas_gerais(Municipio* lista_municipios);
 
 //Para ler o arquivo e popular as listas
 Municipio* carregar_dados_arquivo(const char* nome_arquivo);
 
-
+//Para exibir menu de opções para o usuário
+void exibir_menu();
 
 #endif

@@ -322,6 +322,140 @@ void listar_todas_cachoeiras(Municipio* lista_municipios){
     }
 }
 
+void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
+{
+    
+    printf("\n=============================================\n");
+    while (lista_municipios != NULL)
+    { 
+        int cont = 0;
+
+        while (lista_municipios->lista_cachoeiras != NULL)
+        {
+            cont++;
+            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras;
+        }
+
+        printf("Municipio: %s\n", lista_municipios->nome);
+        printf("Cachoeiras: %d\n\n", cont);
+    }
+
+    printf("=============================================\n");
+}
+
+
+Municipio* municipio_com_menos_cachoeiras(Municipio* lista_municipios)
+{
+    Municipio *aux = lista_municipios, *menorM = aux;
+    int menor = contar_cachoeiras_municipio(menorM, menorM->id_municipio);
+
+    while (aux != NULL)
+    {
+        
+        int cachoeiras = contar_cachoeiras_municipio(lista_municipios, aux->id_municipio);
+
+        if (menor > cachoeiras)
+        {
+            menorM = aux;
+            menor = cachoeiras;
+        }
+
+        aux = aux->prox;
+
+    }
+
+    return menorM;
+}
+
+void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade)
+{
+
+    printf("\n====================== %s ======================\n", dificuldade);
+    if (lista_municipios == NULL)
+        printf("\nA lista esta vazia\n\n");
+
+    Municipio* aux = lista_municipios;
+
+    
+    while (aux != NULL)
+    {
+        while (aux->lista_cachoeiras != NULL)
+        {
+            if (!strcmp(dificuldade, aux->lista_cachoeiras->dificuldade));
+            {
+                printf("ID: %d, ", aux->lista_cachoeiras->id_cachoeira);
+                printf("Nome: %s, ", aux->lista_cachoeiras->nome);
+                printf("Altura: %.2fm, ", aux->lista_cachoeiras->altura);
+                printf("Dificuldade: %s\n", aux->lista_cachoeiras->dificuldade);
+            }
+
+            aux->lista_cachoeiras = aux->lista_cachoeiras->prox;
+        }
+
+        aux = aux->prox;
+    }
+    printf("=========================================================\n");
+
+}
+
+void gerar_estatisticas_gerais(Municipio* lista_municipios)
+{
+    int contM = 0, contC = 0;
+
+    while (lista_municipios != NULL)
+    {
+        while (lista_municipios->lista_cachoeiras != NULL)
+        {
+            contC++;
+            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras->prox;
+        }
+
+        contM++;
+        lista_municipios = lista_municipios->prox;
+    }
+
+    float media = (float) contC / contM;
+
+    printf("Municipios: %d\nCachoeiras: %d\nMedia de cachoeiras por municipio: %f\n", contM, contC, media);
+}
+
+void liberar_municipios(Municipio* listaM)
+{
+    if (listaM == NULL)
+    {
+        printf("A lista esta vazia\n");
+    }
+
+    Municipio* aux;
+
+    while (listaM != NULL)
+    {
+        aux = listaM;
+        listaM = listaM->prox;
+        remover_municipio(&listaM, aux->id_municipio);
+    }
+
+    printf("\nLista de municipios liberada com sucesso!!!\n");
+}
+
+void liberar_cachoeiras(Cachoeira* listaC)
+{
+    if (listaC == NULL)
+    {
+        printf("A lista esta vazia\n");
+        return;
+    }
+
+    Cachoeira* aux;
+
+    while (listaC != NULL)
+    {
+        aux = listaC;
+        listaC = listaC->prox;
+        free(aux);
+    }
+}
+
 Municipio* carregar_dados_arquivo(const char* dados_cachoeiras) {
     //Inicializa a lista principal vazia
     Municipio* lista_municipios = inicializar_lista_vazia();
@@ -353,4 +487,30 @@ Municipio* carregar_dados_arquivo(const char* dados_cachoeiras) {
     }
     fclose(arquivo);
     return lista_municipios;
+}
+
+void exibir_menu() {
+    printf("\n====================================================\n");
+    printf("         SISTEMA DE QUEDAS D'AGUA DO MUNDO          \n");
+    printf("====================================================\n");
+    printf(" [1] Listar todos os Municipios\n");
+    printf(" [2] Inserir novo Municipio\n");
+    printf(" [3] Alterar Municipio\n");
+    printf(" [4] Remover Municipio\n");
+    printf("----------------------------------------------------\n");
+    printf(" [5] Listar Cachoeiras de um Municipio\n");
+    printf(" [6] Inserir nova Cachoeira em um Municipio\n");
+    printf(" [7] Alterar Cachoeira\n");
+    printf(" [8] Remover Cachoeira\n");
+    printf("----------------------------------------------------\n");
+    printf(" [9] CONSULTA: Listar TODAS as Cachoeiras\n");
+    printf(" [10] CONSULTA: Contar Cachoeiras por Municipio\n");
+    printf(" [11] CONSULTA: Filtrar por Dificuldade\n");
+    printf(" [12] CONSULTA: Estatisticas Gerais\n");
+    printf(" [13] CONSULTA: Municipio com Menos Cachoeiras\n");
+    printf("----------------------------------------------------\n");
+    printf(" [14] Recarregar Dados do Arquivo (dados_cachoeiras.txt)\n");
+    printf(" [0] Sair do Sistema\n");
+    printf("====================================================\n");
+    printf("Escolha uma opcao: ");
 }
