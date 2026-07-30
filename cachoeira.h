@@ -31,7 +31,7 @@ int contar_municipios(Municipio* lista_municipios); //ok
 
 int inserir_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach, char* nome, float altura, char* dificuldade); //ok
 Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach); //ok
-void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, char* novo_nome, float nova_altura, char* nova_dificuldade);
+void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, char* novo_nome, float nova_altura, char* nova_dificuldade); //ok
 void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach); //ok
 void listar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun); //ok
 int contar_cachoeiras_municipio(Municipio* lista_municipios, int id_mun); //ok
