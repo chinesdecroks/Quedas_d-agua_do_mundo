@@ -145,7 +145,7 @@ int main() {
                 gerar_estatisticas_gerais(lista_municipios);
                 break;
 
-            case 13: {
+            case 13: 
                 municipio_com_menos_cachoeiras(lista_municipios);
                 break;
 
