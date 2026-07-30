@@ -56,4 +56,7 @@ Municipio* carregar_dados_arquivo(const char* nome_arquivo);
 //Para exibir menu de opções para o usuário
 void exibir_menu();
 
+void liberar_municipios(Municipio* listaM);
+void liberar_cachoeiras(Cachoeira* listaC);
+
 #endif
