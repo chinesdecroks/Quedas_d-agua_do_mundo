@@ -325,18 +325,21 @@ void listar_todas_cachoeiras(Municipio* lista_municipios){
 void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 {
     
+    Municipio* atualM = lista_municipios;
+    Cachoeira* atualC = atualM->lista_cachoeiras;
+
     printf("\n=============================================\n");
-    while (lista_municipios != NULL)
+    while (atualM != NULL)
     { 
         int cont = 0;
 
-        while (lista_municipios->lista_cachoeiras != NULL)
+        while (atualC != NULL)
         {
             cont++;
-            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras;
+            atualC = atualC->prox;
         }
 
-        printf("Municipio: %s\n", lista_municipios->nome);
+        printf("Municipio: %s\n", atualM->nome);
         printf("Cachoeiras: %d\n\n", cont);
     }
 
@@ -344,7 +347,7 @@ void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 }
 
 
-Municipio* municipio_com_menos_cachoeiras(Municipio* lista_municipios)
+void municipio_com_menos_cachoeiras(Municipio* lista_municipios)
 {
     Municipio *aux = lista_municipios, *menorM = aux;
     int menor = contar_cachoeiras_municipio(menorM, menorM->id_municipio);
@@ -364,7 +367,7 @@ Municipio* municipio_com_menos_cachoeiras(Municipio* lista_municipios)
 
     }
 
-    return menorM;
+    printf("\nO municipio com menos cachoeiras eh %s com %d cachoeiras\n", menorM->nome, menor);
 }
 
 void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade)
@@ -374,25 +377,26 @@ void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dific
     if (lista_municipios == NULL)
         printf("\nA lista esta vazia\n\n");
 
-    Municipio* aux = lista_municipios;
+    Municipio* auxM = lista_municipios;
+    Cachoeira* auxC = auxM->lista_cachoeiras;
 
     
-    while (aux != NULL)
+    while (auxM != NULL)
     {
-        while (aux->lista_cachoeiras != NULL)
+        while (auxC != NULL)
         {
-            if (!strcmp(dificuldade, aux->lista_cachoeiras->dificuldade));
+            if (!strcmp(dificuldade, auxC->dificuldade));
             {
-                printf("ID: %d, ", aux->lista_cachoeiras->id_cachoeira);
-                printf("Nome: %s, ", aux->lista_cachoeiras->nome);
-                printf("Altura: %.2fm, ", aux->lista_cachoeiras->altura);
-                printf("Dificuldade: %s\n", aux->lista_cachoeiras->dificuldade);
+                printf("ID: %d, ", auxC->id_cachoeira);
+                printf("Nome: %s, ", auxC->nome);
+                printf("Altura: %.2fm, ", auxC->altura);
+                printf("Dificuldade: %s\n", auxC->dificuldade);
             }
 
-            aux->lista_cachoeiras = aux->lista_cachoeiras->prox;
+            auxC = auxC->prox;
         }
 
-        aux = aux->prox;
+        auxM = auxM->prox;
     }
     printf("=========================================================\n");
 
@@ -402,16 +406,19 @@ void gerar_estatisticas_gerais(Municipio* lista_municipios)
 {
     int contM = 0, contC = 0;
 
-    while (lista_municipios != NULL)
+    Municipio* auxM = lista_municipios;
+    Cachoeira* auxC = auxM->lista_cachoeiras;
+
+    while (auxM != NULL)
     {
-        while (lista_municipios->lista_cachoeiras != NULL)
+        while (auxC != NULL)
         {
             contC++;
-            lista_municipios->lista_cachoeiras = lista_municipios->lista_cachoeiras->prox;
+            auxC = auxC->prox;
         }
 
         contM++;
-        lista_municipios = lista_municipios->prox;
+        auxM = auxM->prox;
     }
 
     float media = (float) contC / contM;

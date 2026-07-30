@@ -48,7 +48,7 @@ void listar_todas_cachoeiras(Municipio* lista_municipios);
 // 2: Contabiliza e exibe quantas cachoeiras existem em cada município
 void contar_cachoeiras_por_municipio(Municipio* lista_municipios);
 //3: Retorna o ponteiro para o município com a menor quantidade de cachoeiras
-Municipio* municipio_com_menos_cachoeiras(Municipio* lista_municipios);
+void municipio_com_menos_cachoeiras(Municipio* lista_municipios);
 //1: Filtra e exibe as cachoeiras de acordo com a dificuldade buscada
 void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade);
 // 2: Gera estatísticas (Total de municípios, total de cachoeiras e média)
