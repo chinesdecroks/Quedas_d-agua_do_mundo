@@ -90,11 +90,7 @@ int main() {
                 scanf("%[^\n]", nome);
                 while (getchar() != '\n');
 
-                if(inserir_cachoeira(&lista_municipios, id_mun, id_cach, nome, altura, dificuldade)){
-                    printf("✅ Cachoeira inserida com sucesso!\n");
-                } else {
-                    printf("❌ Erro ao inserir cachoeira.\n");
-                }
+                inserir_cachoeira(&lista_municipios, id_mun, id_cach, nome, altura, dificuldade);
                 break;
 
             case 7:
