@@ -30,8 +30,7 @@ O projeto encontra-se modularizado nos seguintes ficheiros:
 * `dados_cachoeiras.txt`: Ficheiro de texto para persistência inicial e leitura automatizada dos dados.
 
 ### 2.1. Estruturas de Dados Principais
-
-```c
+    ```c
 typedef struct Cachoeira {
     int id_cachoeira;
     char nome[50];
@@ -48,8 +47,7 @@ typedef struct Municipio {
     struct Municipio* ant;
     struct Municipio* prox;
 } Municipio;
-
----
+```
 
 ### 2.2. Funções Básicas de Manipulação (CRUD)
 
@@ -68,8 +66,6 @@ typedef struct Municipio {
 * **Remoção (`remover_municipio`, `remover_cachoeira`)**
   * **Propósito:** Eliminar registos da memória em tempo de execução sem deixar ponteiros soltos.
   * **Funcionamento:** Reajustam os ponteiros `prox` e `ant` dos nós vizinhos. Na remoção de um município, é chamada a função auxiliar `remover_todas_cachoeiras` para desalocar primeiramente todos os nós da sublista de cachoeiras, libertando depois a memória do nó pai via `free()`.
-
----
 
 ### 2.3. Funções Adicionais e Consultas Especializadas
 
@@ -117,7 +113,7 @@ Abaixo estão demonstrados cenários reais de execução do sistema, incluindo a
 
 (PRINT)
 
-###Exemplo 3: Filtragem por Dificuldade
+### Exemplo 3: Filtragem por Dificuldade
 
 **Entrada (Opção 11 no menu principal):**
 
