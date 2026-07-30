@@ -19,7 +19,8 @@ int main() {
         exibir_menu();
         
         scanf("%d", &opcao);
-
+        while (getchar() != '\n');
+        
         printf("\n");
 
         switch (opcao) {

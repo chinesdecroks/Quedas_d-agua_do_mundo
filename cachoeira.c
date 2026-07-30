@@ -71,6 +71,9 @@ void remover_municipio(Municipio** lista_municipios, int id_mun){
     //se for o primeiro da lista
     if (municipio->ant == NULL) {
         *lista_municipios = municipio->prox; //a nova cabeça da lista passa a ser o proximo
+        if (*lista_municipios != NULL) {      // se a lista ficar vazia
+        (*lista_municipios)->ant = NULL; //o ant passa a ser NULL
+    }
     }
     //se for o ultimo da lista
     else if (municipio->prox == NULL) {
