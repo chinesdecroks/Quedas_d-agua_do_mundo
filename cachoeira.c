@@ -327,12 +327,12 @@ void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 {
     
     Municipio* atualM = lista_municipios;
-    Cachoeira* atualC = atualM->lista_cachoeiras;
 
     printf("\n=============================================\n");
     while (atualM != NULL)
     { 
         int cont = 0;
+        Cachoeira* atualC = atualM->lista_cachoeiras;
 
         while (atualC != NULL)
         {
@@ -342,6 +342,8 @@ void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 
         printf("Municipio: %s\n", atualM->nome);
         printf("Cachoeiras: %d\n\n", cont);
+
+        atualM = atualM->prox;
     }
 
     printf("=============================================\n");
@@ -368,7 +370,7 @@ void municipio_com_menos_cachoeiras(Municipio* lista_municipios)
 
     }
 
-    printf("\nO municipio com menos cachoeiras eh %s com %d cachoeiras\n", menorM->nome, menor);
+    printf("Municipios: %s\nCachoeiras: %d\n\n", menorM->nome, menor);
 }
 
 void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade)
@@ -379,14 +381,15 @@ void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dific
         printf("\nA lista esta vazia\n\n");
 
     Municipio* auxM = lista_municipios;
-    Cachoeira* auxC = auxM->lista_cachoeiras;
 
     
     while (auxM != NULL)
     {
+        Cachoeira* auxC = auxM->lista_cachoeiras;
+
         while (auxC != NULL)
         {
-            if (!strcmp(dificuldade, auxC->dificuldade));
+            if (!strcmp(dificuldade, auxC->dificuldade))
             {
                 printf("ID: %d, ", auxC->id_cachoeira);
                 printf("Nome: %s, ", auxC->nome);
@@ -424,7 +427,7 @@ void gerar_estatisticas_gerais(Municipio* lista_municipios)
 
     float media = (float) contC / contM;
 
-    printf("Municipios: %d\nCachoeiras: %d\nMedia de cachoeiras por municipio: %f\n", contM, contC, media);
+    printf("Municipios: %d\nCachoeiras: %d\nMedia de cachoeiras por municipio: %.2f\n", contM, contC, media);
 }
 
 void liberar_municipios(Municipio* listaM)

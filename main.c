@@ -18,7 +18,7 @@ int main() {
     do {
         exibir_menu();
         
-        while (getchar() != '\n');
+        scanf("%d", &opcao);
 
         printf("\n");
 
@@ -135,6 +135,7 @@ int main() {
             case 11:
                 printf("--- Filtrar Cachoeiras por Dificuldade ---\n");
                 printf("Digite a dificuldade desejada (Facil, Media ou Dificil): ");
+                setbuf(stdin, NULL);
                 scanf("%[^\n]", dificuldade);
                 filtrar_cachoeiras_por_dificuldade(lista_municipios, dificuldade);
                 break;
@@ -145,6 +146,7 @@ int main() {
                 break;
 
             case 13: {
+                printf("=== MUNICIPIO COM MENOS CACHOEIRAS ===\n");
                 municipio_com_menos_cachoeiras(lista_municipios);
                 break;
             }
