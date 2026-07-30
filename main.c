@@ -146,13 +146,12 @@ int main() {
                 break;
 
             case 13: {
-                printf("=== MUNICIPIO COM MENOS CACHOEIRAS ===\n");
                 municipio_com_menos_cachoeiras(lista_municipios);
                 break;
-            }
 
             case 14:
                 printf("Recarregando dados do arquivo 'dados_cachoeiras.txt'...\n");
+                liberar_municipios(lista_municipios); // Libera a lista atual da memória antes de carregar a nova
                 lista_municipios = carregar_dados_arquivo("dados_cachoeiras.txt");
                 break;
 
@@ -166,6 +165,8 @@ int main() {
         }
 
     } while (opcao != 0);
+
+    liberar_municipios(lista_municipios);
 
     return 0;
 }
