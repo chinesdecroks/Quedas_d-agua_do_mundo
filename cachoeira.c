@@ -267,6 +267,8 @@ void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach) {
     }
 
     free(cachoeira);
+
+    printf("\nCachoeira excluida com sucesso\n");
 }
 
 void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, char* novo_nome, float nova_altura, char* nova_dificuldade) {
@@ -329,15 +331,15 @@ void listar_todas_cachoeiras(Municipio* lista_municipios){
 void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 {
     
-    Municipio* atualM = lista_municipios;
+    Municipio* atualM = lista_municipios; // ponteiro auxiliar para lista de municipios
 
     printf("\n=============================================\n");
-    while (atualM != NULL)
+    while (atualM != NULL) // anda na lista de municipios
     { 
         int cont = 0;
-        Cachoeira* atualC = atualM->lista_cachoeiras;
+        Cachoeira* atualC = atualM->lista_cachoeiras; //cada vez que se acessa um novo municipio atualiza a lista de cachoeiras
 
-        while (atualC != NULL)
+        while (atualC != NULL)// anda na lista de cachoeiras e conta elas
         {
             cont++;
             atualC = atualC->prox;
@@ -355,15 +357,15 @@ void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 
 void municipio_com_menos_cachoeiras(Municipio* lista_municipios)
 {
-    Municipio *aux = lista_municipios, *menorM = aux;
-    int menor = contar_cachoeiras_municipio(menorM, menorM->id_municipio);
+    Municipio *aux = lista_municipios, *menorM = aux;// ponteiro auxiliar para a lista e outro para armazenar o municipio com menos cachoeiras
+    int menor = contar_cachoeiras_municipio(menorM, menorM->id_municipio);// recebe o numero de cachoeiras do primeiro municipio
 
-    while (aux != NULL)
+    while (aux != NULL)//anda na lista de municipios
     {
         
-        int cachoeiras = contar_cachoeiras_municipio(lista_municipios, aux->id_municipio);
+        int cachoeiras = contar_cachoeiras_municipio(lista_municipios, aux->id_municipio);//conforme anda se armazena a quantidade de cachoeras de cada municipio
 
-        if (menor > cachoeiras)
+        if (menor > cachoeiras)//substituo nas minhas variáveis se eu encontrar um municipio com quantidade de cachoeiras menor que o municipio atual com menor n° de cachoeiras
         {
             menorM = aux;
             menor = cachoeiras;
@@ -380,19 +382,19 @@ void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dific
 {
 
     printf("\n====================== %s ======================\n", dificuldade);
-    if (lista_municipios == NULL)
+    if (lista_municipios == NULL)//verifico se a lista principal é vazia
         printf("\nA lista esta vazia\n\n");
 
-    Municipio* auxM = lista_municipios;
+    Municipio* auxM = lista_municipios;//ponteiro auxiliar para a lista de municipios
 
     
-    while (auxM != NULL)
+    while (auxM != NULL)// anda na lista de municipios
     {
-        Cachoeira* auxC = auxM->lista_cachoeiras;
+        Cachoeira* auxC = auxM->lista_cachoeiras;// a cada novo municipio atualizo a lista de cachoeiras
 
-        while (auxC != NULL)
+        while (auxC != NULL)//anda na lista de cachoeiras
         {
-            if (!strcmp(dificuldade, auxC->dificuldade))
+            if (!strcmp(dificuldade, auxC->dificuldade))//verifica se a dificuldade informada é igual a dificuldade da cachoeira
             {
                 printf("ID: %d, ", auxC->id_cachoeira);
                 printf("Nome: %s, ", auxC->nome);
@@ -413,22 +415,23 @@ void gerar_estatisticas_gerais(Municipio* lista_municipios)
 {
     int contM = 0, contC = 0;
 
-    Municipio* auxM = lista_municipios;
-    Cachoeira* auxC = auxM->lista_cachoeiras;
+    Municipio* auxM = lista_municipios;//ponteiro auxiliar para a lista de cachoeiras
 
-    while (auxM != NULL)
+    while (auxM != NULL)//anda na lista de Municipios
     {
-        while (auxC != NULL)
+        Cachoeira* auxC = auxM->lista_cachoeiras;// a cada novo municipio se atualiza a lista de cachoeiras
+
+        while (auxC != NULL)//anda na lista de Cachoeiras
         {
-            contC++;
+            contC++;//conto a quantidade de cachoeiras
             auxC = auxC->prox;
         }
 
-        contM++;
+        contM++;//conto a quantidade de municipios
         auxM = auxM->prox;
     }
 
-    float media = (float) contC / contM;
+    float media = (float) contC / contM;//calculo a media de cachoeiras por municipio
 
     printf("Municipios: %d\nCachoeiras: %d\nMedia de cachoeiras por municipio: %.2f\n", contM, contC, media);
 }
@@ -440,9 +443,9 @@ void liberar_municipios(Municipio* listaM)
         printf("A lista esta vazia\n");
     }
 
-    Municipio* aux;
+    Municipio* aux;//ponteiro auxiliar para receber o nó que será liberado
 
-    while (listaM != NULL)
+    while (listaM != NULL)//anda na lista de municipios e vai liberando todos os nós de municipio
     {
         aux = listaM;
         listaM = listaM->prox;
@@ -460,9 +463,9 @@ void liberar_cachoeiras(Cachoeira* listaC)
         return;
     }
 
-    Cachoeira* aux;
+    Cachoeira* aux;//ponteiro auxiliar para receber o nó que será liberado
 
-    while (listaC != NULL)
+    while (listaC != NULL)//anda na lista e vai liberando todas as cachoeiras
     {
         aux = listaC;
         listaC = listaC->prox;
