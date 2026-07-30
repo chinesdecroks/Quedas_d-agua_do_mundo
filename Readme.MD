@@ -10,7 +10,7 @@ Este repositório contém a implementação de um sistema para gestão e organiz
 O objetivo do sistema é resolver o problema de armazenamento e manipulação de dados geográficos e turísticos que possuem uma relação do tipo **um-para-muitos** (um município pode conter múltiplas cachoeiras). Para isso, torna-se necessário gerir dois níveis de informação interligados, permitindo inserções, buscas, alterações, remoções e consultas estatísticas de forma dinâmica.
 
 ### Desenho da Solução e Estruturas de Dados
-A solução foi projetada utilizando **Listas Duplamente Encadeadas de Listas**:
+A solução foi projetada utilizando **Listas Duplamente Encadeadas de Listas Duplamente Encadeadas**:
 * **Estrutura Principal (Externa):** Lista duplamente encadeada de municípios (`Municipio`).
 * **Estrutura Secundária (Interna):** Cada nó de `Municipio` possui um ponteiro `lista_cachoeiras`, que aponta para a cabeça de uma sublista duplamente encadeada de `Cachoeira`.
 
