@@ -1,6 +1,6 @@
 # Sistema de Quedas d'Água do Mundo
 
-Este repositório contém a implementação de um sistema para gestão e organização hierárquica de municípios e suas respectivas cachoeiras em linguagem C, utilizando **Listas Duplamente Encadeadas de Listas (Lista de Listas)**.
+Este repositório contém a implementação de um sistema para gestão e organização hierárquica de municípios e suas respectivas cachoeiras em linguagem C, utilizando **Listas Duplamente Encadeadas de Listas Duplamente Encadeadas (Lista de Listas)**.
 
 ---
 
