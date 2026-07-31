@@ -448,9 +448,10 @@ void liberar_municipios(Municipio* listaM)
 
     while (listaM != NULL)//anda na lista de municipios e vai liberando todos os nós de municipio
     {
-        aux = listaM;
-        listaM = listaM->prox;
-        remover_municipio(&listaM, aux->id_municipio);
+        aux = listaM->prox;
+        remover_todas_cachoeiras(listaM); //remove tds as cachoeiras antes de remover o municipio
+        free(listaM);
+        listaM = aux; //avança para o prox municipio
     }
 
     printf("\nLista de municipios liberada com sucesso!!!\n");
