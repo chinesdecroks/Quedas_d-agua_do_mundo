@@ -76,7 +76,7 @@ A realização deste projeto permitiu à nossa equipa consolidar conceitos funda
 ### Desafios Enfrentados pelo Grupo
 
 1. **Gestão de Ponteiros e Tratamento de Casos de Borda:**
-   O principal desafio técnico do grupo foi garantir a integridade dos ponteiros (`ant` e `prox`) em operações de remoção e inserção. Identificámos dificuldades iniciais ao lidar com os casos limite, tais como a remoção do primeiro elemento da lista (onde a cabeça da lista precisa de ser atualizada) ou do único elemento existente, evitando ponteiros "órfãos" (*dangling pointers*).
+   O principal desafio técnico do grupo foi garantir a integridade dos ponteiros (`ant` e `prox`) em operações de remoção e inserção. Identificamos dificuldades iniciais ao lidar com os casos limite, tais como a remoção do primeiro elemento da lista (onde a cabeça da lista precisa de ser atualizada) ou do único elemento existente, evitando ponteiros "órfãos" (*dangling pointers*).
 
 2. **Prevenção de Vazamentos de Memória (*Memory Leaks*):**
    Durante a implementação da eliminação de municípios, percebemos que não bastava desalocar o nó do município. Tivemos de desenvolver a lógica auxiliar `remover_todas_cachoeiras` para varrer e libertar primeiro toda a sublista de cachoeiras associadas antes de libertar a memória do município pai. Acompanhar a memória alocada com `malloc` e garantir o correspondente `free` exigiu testes minuciosos de depuração.
@@ -86,4 +86,4 @@ A realização deste projeto permitiu à nossa equipa consolidar conceitos funda
 
 ### Principais Lições Aprendidas
 
-Esta experiência reforçou para a nossa equipa a importância do planeamento e da modularização do código. Aprendemos na prática que a escolha adequada de estruturas de dados simplifica a solução de problemas complexos e que o rigor na manipulação de memória é crucial para construir programas estáveis, seguros e eficientes em C.
+Esta experiência reforçou para a nossa equipe a importância do planejamento e da modularização do código. Aprendemos na prática que a escolha adequada de estruturas de dados simplifica a solução de problemas complexos e que o rigor na manipulação de memória é crucial para construir programas estáveis, seguros e eficientes em C.
