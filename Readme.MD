@@ -26,7 +26,7 @@ A escolha por encadeamento duplo (`ant` e `prox`) em ambos os níveis garante:
 O projeto encontra-se modularizado nos seguintes ficheiros:
 * `cachoeira.h`: Definição das estruturas de dados e protótipos das funções.
 * `cachoeira.c`: Implementação da lógica de negócio, manipulação de ponteiros e gestão de memória dinâmica.
-* `main.c`: Interface interativa via consola (menu) para interação com o utilizador.
+* `main.c`: Interface interativa via console (menu) para interação com o utilizador.
 * `dados_cachoeiras.txt`: Ficheiro de texto para persistência inicial e leitura automatizada dos dados.
 
 ### 2.1. Funções Básicas de Manipulação (CRUD)
