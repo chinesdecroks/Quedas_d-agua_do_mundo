@@ -297,7 +297,7 @@ void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, cha
 
     Cachoeira* cachoeira = buscar_cachoeira(lista_municipios, id_mun, id_cach);
     if (cachoeira == NULL) {
-        printf("Não há cachoeiras cadastradas ou a cachoeira não existe na lista\n");
+        printf("Não há cachoeiras cadastradas ou a cachoeira não existe na lista ou o município não existe\n");
         return;
     }
 
