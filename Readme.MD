@@ -71,7 +71,7 @@ O projeto encontra-se modularizado nos seguintes ficheiros:
 
 ## 3. Exemplos de Uso
 
-Abaixo estão demonstrados cenários reais de execução do sistema, incluindo as entradas fornecidas pelo utilizador e as respetivas saídas geradas no terminal.
+Abaixo estão demonstrados cenários reais de execução do sistema, incluindo as entradas fornecidas pelo utilizador e as respectivas saídas geradas no terminal.
 
 ==> https://docs.google.com/document/d/1Np21PygKJI6BjlqY4A9a3bYz4ng6-y8fuvrNgYOqVfA/edit?usp=sharing <==
 
