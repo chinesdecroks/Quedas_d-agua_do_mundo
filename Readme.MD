@@ -69,43 +69,7 @@ O projeto encontra-se modularizado nos seguintes ficheiros:
 
 ---
 
-## 3. Exemplos de Uso
-
-Abaixo estão demonstrados cenários reais de execução do sistema, incluindo as entradas fornecidas pelo utilizador e as respetivas saídas geradas no terminal.
-
-### Exemplo 1: Leitura de Ficheiro e Listagem de Municípios
-
-**Entrada (Opção 1 no menu principal):**
-
-(PRINT)
-
-**Saída obtida:**
-
-(PRINT)
-
-### Exemplo 2: Consulta de Cachoeiras por Município
-
-**Entrada (Opção 5 no menu principal):**
-
-(PRINT)
-
-**Saída obtida:**
-
-(PRINT)
-
-### Exemplo 3: Filtragem por Dificuldade
-
-**Entrada (Opção 11 no menu principal):**
-
-(PRINT)
-
-**Saída obtida:**
-
-(PRINT)
-
----
-
-## 4. Conclusão
+## 3. Conclusão
 
 A realização deste projeto permitiu à nossa equipa consolidar conceitos fundamentais de Estruturas de Dados e alocação dinâmica em linguagem C. A construção de uma arquitetura bidimensional baseada em **Listas Duplamente Encadeadas de Listas** trouxe um aprendizado prático valioso, mas também nos impôs desafios significativos durante o desenvolvimento.
 
