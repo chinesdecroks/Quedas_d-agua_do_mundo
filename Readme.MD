@@ -69,7 +69,15 @@ O projeto encontra-se modularizado nos seguintes ficheiros:
 
 ---
 
-## 3. Conclusão
+## 3. Exemplos de Uso
+
+Abaixo estão demonstrados cenários reais de execução do sistema, incluindo as entradas fornecidas pelo utilizador e as respetivas saídas geradas no terminal.
+
+==> https://docs.google.com/document/d/1Np21PygKJI6BjlqY4A9a3bYz4ng6-y8fuvrNgYOqVfA/edit?usp=sharing <==
+
+---
+
+## 4. Conclusão
 
 A realização deste projeto permitiu à nossa equipa consolidar conceitos fundamentais de Estruturas de Dados e alocação dinâmica em linguagem C. A construção de uma arquitetura bidimensional baseada em **Listas Duplamente Encadeadas de Listas** trouxe um aprendizado prático valioso, mas também nos impôs desafios significativos durante o desenvolvimento.
 
