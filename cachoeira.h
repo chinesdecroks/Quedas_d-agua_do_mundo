@@ -1,22 +1,9 @@
 #ifndef CACHOEIRA_H
 #define CACHOEIRA_H
 
-typedef struct Cachoeira {
-    int id_cachoeira;
-    char nome[50];
-    float altura;
-    char dificuldade[20]; // Ex: "Facil", "Media", "Dificil"
-    struct Cachoeira* ant;
-    struct Cachoeira* prox;
-} Cachoeira;
 
-typedef struct Municipio {
-    int id_municipio;
-    char nome[50];
-    struct Cachoeira* lista_cachoeiras;
-    struct Municipio* ant;
-    struct Municipio* prox;
-} Municipio;
+typedef struct Cachoeira Cachoeira;
+typedef struct Municipio Municipio;
 
 // OPERAÇÕES PRINCIPAIS
 Municipio* inicializar_lista_vazia(); //ok

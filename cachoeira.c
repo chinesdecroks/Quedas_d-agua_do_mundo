@@ -3,6 +3,23 @@
 #include <string.h>
 #include "cachoeira.h"
 
+struct Cachoeira {
+    int id_cachoeira;
+    char nome[50];
+    float altura;
+    char dificuldade[20]; // Ex: "Facil", "Media", "Dificil"
+    struct Cachoeira* ant;
+    struct Cachoeira* prox;
+};
+
+struct Municipio {
+    int id_municipio;
+    char nome[50];
+    struct Cachoeira* lista_cachoeiras;
+    struct Municipio* ant;
+    struct Municipio* prox;
+} ;
+
 Municipio* inicializar_lista_vazia(){
     return NULL; //a cabeça da lista de municipios eh nula, ou seja, lista vazia
 }
