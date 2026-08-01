@@ -291,7 +291,7 @@ void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach) {
 
 void alterar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach, char* novo_nome, float nova_altura, char* nova_dificuldade) {
     if (lista_municipios_vazia(lista_municipios)) {
-        printf("Lista de municípios vazia\n");
+        printf("Lista de municípios vazia\n");78264729
         return;
     }
 
