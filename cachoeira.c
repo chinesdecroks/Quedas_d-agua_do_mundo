@@ -375,25 +375,26 @@ void contar_cachoeiras_por_municipio(Municipio* lista_municipios)
 
 void municipio_com_menos_cachoeiras(Municipio* lista_municipios)
 {
-    Municipio *aux = lista_municipios, *menorM = aux;// ponteiro auxiliar para a lista e outro para armazenar o municipio com menos cachoeiras
-    int menor = contar_cachoeiras_municipio(menorM, menorM->id_municipio);// recebe o numero de cachoeiras do primeiro municipio
+    Municipio* atual = lista_municipios;
+    Municipio* menor = atual;
 
-    while (aux != NULL)//anda na lista de municipios
-    {
-        
-        int cachoeiras = contar_cachoeiras_municipio(lista_municipios, aux->id_municipio);//conforme anda se armazena a quantidade de cachoeras de cada municipio
+    //pego o menor absoluto
+    while(atual != NULL){
+        int a = contar_cachoeiras_municipio(atual, atual->id_municipio);
+        int m = contar_cachoeiras_municipio(menor, menor->id_municipio);
+        if(a < m) menor = atual;
+        atual = atual->prox;
+    }
+    atual = lista_municipios;
 
-        if (menor > cachoeiras)//substituo nas minhas variáveis se eu encontrar um municipio com quantidade de cachoeiras menor que o municipio atual com menor n° de cachoeiras
-        {
-            menorM = aux;
-            menor = cachoeiras;
+    //imprimo todos aqueles com a menor quantidade
+    while(atual != NULL){
+        if (contar_cachoeiras_municipio(atual, atual->id_municipio) == contar_cachoeiras_municipio(menor, menor->id_municipio)) {
+            printf("Municipios: %s\nCachoeiras: %d\n\n", atual->nome, contar_cachoeiras_municipio(atual, atual->id_municipio));
         }
-
-        aux = aux->prox;
-
+        atual = atual->prox;
     }
 
-    printf("Municipios: %s\nCachoeiras: %d\n\n", menorM->nome, menor);
 }
 
 void filtrar_cachoeiras_por_dificuldade(Municipio* lista_municipios, char* dificuldade)

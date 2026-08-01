@@ -2,7 +2,7 @@
 #include "cachoeira.h"
 
 int main() {
-    Municipio* lista_municipios = carregar_dados_arquivo("dados_cachoeiras.txt");
+    Municipio* lista_municipios = carregar_dados_arquivo("../dados_cachoeiras.txt");
 
     if (lista_municipios == NULL) {
         printf("⚠️ Aviso: A lista iniciou vazia (arquivo nao encontrado ou sem dados).\n");
