@@ -236,17 +236,21 @@ Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach
         return NULL;
     }
 
-    Cachoeira* cachoeira = lista_municipios->lista_cachoeiras;
-    if (cachoeira == NULL) {
-        printf("Lista de cachoeiras vazia\n");
+    Municipio* municipio = buscar_municipio(lista_municipios, id_mun);
+    if (municipio == NULL) {
+        printf("Município não encontrado\n");
         return NULL;
     }
 
+    //Pega a cabeça da lista de cachoeiras APENAS deste município
+    Cachoeira* atual = municipio->lista_cachoeiras;
     //percorre a lista de cachoeiras do município até encontrar a cachoeira com o id desejado ou chegar ao final da lista
-    while (cachoeira->id_cachoeira != id_cach && cachoeira->prox != NULL) cachoeira = cachoeira->prox;
-
-    //devo verificar, pois pode ter encontrado ou simplesmente chegado no fim
-    if (cachoeira->id_cachoeira == id_cach) return cachoeira;
+    while (atual != NULL) {
+        if (atual->id_cachoeira == id_cach) {
+            return atual; // Encontrou a cachoeira exata! Retorna o ponteiro
+        }
+        atual = atual->prox;
+    }
 
     return NULL;
 }
@@ -254,6 +258,12 @@ Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach
 void remover_cachoeira(Municipio** lista_municipios, int id_mun, int id_cach) {
     if (lista_municipios_vazia(*lista_municipios)) {
         printf("Lista de municípios vazia\n");
+        return;
+    }
+
+    Municipio* municipio = buscar_municipio(*lista_municipios, id_mun);
+    if (municipio == NULL) {
+        printf("Município não encontrado\n");
         return;
     }
 
