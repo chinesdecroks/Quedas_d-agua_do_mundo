@@ -235,8 +235,9 @@ Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach
         printf("Lista de municípios vazia\n");
         return NULL;
     }
-
+    //encontra o municipio desejado
     Municipio* municipio = buscar_municipio(lista_municipios, id_mun);
+    
     if (municipio == NULL) {
         printf("Município não encontrado\n");
         return NULL;
@@ -244,6 +245,7 @@ Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach
 
     //Pega a cabeça da lista de cachoeiras APENAS deste município
     Cachoeira* atual = municipio->lista_cachoeiras;
+
     //percorre a lista de cachoeiras do município até encontrar a cachoeira com o id desejado ou chegar ao final da lista
     while (atual != NULL) {
         if (atual->id_cachoeira == id_cach) {
@@ -252,6 +254,7 @@ Cachoeira* buscar_cachoeira(Municipio* lista_municipios, int id_mun, int id_cach
         atual = atual->prox;
     }
 
+    printf("Cachoeira não encontrada\n");
     return NULL;
 }
 
