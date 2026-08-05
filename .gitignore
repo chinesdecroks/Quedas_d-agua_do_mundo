@@ -1,0 +1,12 @@
+# Pastas de compilação comuns do CMake
+build/
+cmake-build-debug/
+cmake-build-release/
+
+# Executáveis e arquivos binários
+*.exe
+*.out
+*.o
+*.a
+*.so
+Quedas_d_agua_do_mundo
